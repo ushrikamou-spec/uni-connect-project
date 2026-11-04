@@ -1,0 +1,58 @@
+.counselling-session-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.counselling-session-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid #edf2f8;
+    border-radius: 12px;
+    background: #fbfdff;
+}
+
+.counselling-session-row strong {
+    display: block;
+    color: #102a43;
+    font-size: 0.95rem;
+}
+
+.counselling-session-row span {
+    color: #71839a;
+    font-size: 0.85rem;
+}
+
+.counselling-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.counselling-status-pending {
+    background: #eff6ff;
+    color: #1d4ed8 !important;
+}
+
+.counselling-status-approved {
+    background: #dcfce7;
+    color: #16805d !important;
+}
+
+.counselling-status-hold {
+    background: #fef3c7;
+    color: #a16207 !important;
+}
+
+.counselling-status-rejected {
+    background: #fff1f2;
+    color: #be123c !important;
+}
