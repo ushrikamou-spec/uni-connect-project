@@ -1,7 +1,7 @@
-
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import "./login.css";
 
 export default function OneLoginPage() {
@@ -19,7 +19,7 @@ export default function OneLoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: form.get("email"),
+          identifier: form.get("identifier"), // Email অথবা University ID দুটোই নেবে
           password: form.get("password"),
         }),
       });
@@ -48,18 +48,18 @@ export default function OneLoginPage() {
           <h1 id="login-title">Login to UniConnect</h1>
 
           <p className="login-subtitle">
-            Enter your details to continue to your university community.
+            Enter your University ID or Email to continue to your community.
           </p>
 
           <form onSubmit={handleSubmit}>
             <div className="login-field">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="identifier">University ID or Email</label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="you@example.com"
+                id="identifier"
+                name="identifier"
+                type="text"
+                autoComplete="username"
+                placeholder="e.g., 2222587042 or you@example.com"
                 required
               />
             </div>
@@ -84,6 +84,13 @@ export default function OneLoginPage() {
               {message}
             </p>
           </form>
+
+          <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.9rem" }}>
+            Don&apos;t have an account?{" "}
+            <Link href="/signup_page" style={{ color: "#2563eb", fontWeight: 600 }}>
+              Sign up here
+            </Link>
+          </p>
         </section>
       </main>
     </>

@@ -10,32 +10,43 @@ import {
 } from "../../../lib/auth";
 
 export async function POST(request: Request) {
-    let body: { email?: unknown; password?: unknown } = {};
+    let body: { identifier?: unknown; email?: unknown; password?: unknown } = {};
     try {
         body = await request.json();
     } catch {
         // an empty or invalid body is treated as wrong credentials
     }
 
-    const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+    const rawIdentifier =
+        typeof body.identifier === "string"
+            ? body.identifier.trim()
+            : typeof body.email === "string"
+            ? body.email.trim()
+            : "";
     const password = typeof body.password === "string" ? body.password : "";
 
-    if (!email || !password) {
+    if (!rawIdentifier || !password) {
         return NextResponse.json(
-            { error: "Please enter your email and password." },
+            { error: "Please enter your University ID or Email and password." },
             { status: 400 }
         );
     }
 
     try {
         await connectDB();
-        const user = await User.findOne({ email });
 
-        // Same message for "no such user" and "wrong password" on purpose.
+        // Search by email (case-insensitive) OR exact universityId
+        const user = await User.findOne({
+            $or: [
+                { email: rawIdentifier.toLowerCase() },
+                { universityId: rawIdentifier },
+            ],
+        });
+
         const valid = user ? await bcrypt.compare(password, user.passwordHash) : false;
         if (!user || !valid) {
             return NextResponse.json(
-                { error: "Incorrect email or password." },
+                { error: "Incorrect University ID/Email or password." },
                 { status: 401 }
             );
         }
